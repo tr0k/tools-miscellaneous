@@ -1,12 +1,13 @@
 #!/bin/sh
 
 # Run example: ./kerberos_chrome_mac.sh cern.ch
+# This might require: pip3 install pyobjc-framework-SystemConfiguration
 # To verify chrome policies: chrome://policy/
 # Restart of the webbrowser is needed too
 
 adfs_alias="${1:-cern.ch}"
 echo "${adfs_alias}"
-loggedInUser=`python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");'`
+loggedInUser=`python3 -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");'`
 echo $loggedInUser
 
 # Deprecated since Chrome 101 (at least)
